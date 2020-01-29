@@ -23,7 +23,7 @@ public class ProductService {
 	}
 
 	public List<Product> getProduct(String userId) {
-		User user = userRepository.findByUsername(userId);
+		User user = userRepository.findByUserId(userId);
 		return productRepository.findByUserId(user);
 	}
 
