@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.AuctionManagementSystem.model.Product;
 import com.example.AuctionManagementSystem.repository.ProductRepository;
+import com.example.AuctionManagementSystem.repository.UserRepository;
 
 @Service
 public class ProductService {
@@ -14,12 +15,16 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productRepository;
 	
+	@Autowired
+	private UserRepository userRepository;
+	
 	public void addProduct(Product product) {
 		productRepository.save(product);
 	}
 
-		public List<Product> getProduct(String userId) {
-			return productRepository.findByUserId(userId);
+	public List<Product> getProduct(String userId) {
+		User user = userRepository.findByUsername(userId);
+		return productRepository.findByUserId(user);
 	}
 
 	
