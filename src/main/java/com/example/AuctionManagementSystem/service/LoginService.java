@@ -31,6 +31,8 @@ public class LoginService {
    
     public boolean loginUser(String userName, String password) {
         User user = userService.getUser(userName);
+        if(user == null)
+        	return false;
         if(user.getPassword().equals(password)){
         logger.info("User log in");
         return true;
