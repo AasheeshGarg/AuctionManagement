@@ -11,6 +11,6 @@ import com.example.AuctionManagementSystem.model.User;
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
-	List<Product> findByUser(User user);
+	List<Product> findByUser(long userId);
 
 }
