@@ -7,11 +7,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class UserService {
 	@Autowired
 	private UserRepository userRepository;
+
+	private Logger logger = Logger.getLogger(UserService.class.getName());
 
 	public List<User> getAllUsers() {
 		List<User> users = new ArrayList<>();
@@ -32,11 +35,16 @@ public class UserService {
 		if(users.isEmpty())
 			userRepository.save(user);
 		for(User u : users) {
-			if(u.getUsername().equals(user.getUsername()))
-				System.out.println("User already Registered !!!");
-			else if(user.getUsername().isEmpty())
-				System.out.println("Please enter Username");
-			else
+			if(u.getUsername().equals(user.getUsername())) {
+
+				logger.info("User already Registered !!!");
+				throw new IllegalArgumentException("USer already registered.");
+			}
+			else if(user.getUsername().isEmpty()) {
+				logger.info("Please enter Username");
+				throw new IllegalArgumentException("Invalid UserName");
+
+			}
 			userRepository.save(user);
 		}
 	}

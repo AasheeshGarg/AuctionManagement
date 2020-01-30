@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class ProductService {
 	
 	@Autowired
 	private ProductRepository productRepository;
+
+	private Logger logger = Logger.getLogger(ProductService.class.getName());
 	
 	@Autowired
 	private UserService userService;
@@ -24,11 +27,16 @@ public class ProductService {
 			if(products.isEmpty())
 				productRepository.save(product);
 			for(Product p : products) {
-				if(p.getProductName().equals(product.getProductName()))
-					System.out.println("Product already Added !!!");
-				else if(product.getProductName().isEmpty())
-					System.out.println("Please enter Product Name");
-				else
+				if(p.getProductName().equals(product.getProductName())) {
+					logger.info("Product already Added !!!");
+					throw new IllegalArgumentException("Product already present.");
+				}
+				else if(product.getProductName().isEmpty()){
+					logger.info("Please enter Product Name");
+					throw new IllegalArgumentException("Invalid product name.");
+				}
+
+
 					productRepository.save(product);
 			}
 		}
@@ -37,6 +45,11 @@ public class ProductService {
 	public List<Product> getProduct(String userId) {
 		User user = userService.getUserById(Long.valueOf(userId));
 		return user.getProducts();
+	}
+
+	public Product getProduct(Product product) {
+		return productRepository.save(product);
+
 	}
 
 	
