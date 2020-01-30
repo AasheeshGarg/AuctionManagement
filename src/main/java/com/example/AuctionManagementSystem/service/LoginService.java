@@ -26,16 +26,16 @@ public class LoginService {
 
     @Autowired
     private UserService userService;
-
-
-   
+    
     public boolean loginUser(String userName, String password) {
         User user = userService.getUser(userName);
-        if(user == null)
+        if(user == null) {
+        	logger.info("User not Registered");
         	return false;
+        }
         if(user.getPassword().equals(password)){
-        logger.info("User log in");
-        return true;
+        	logger.info("User Successfully Logged In");
+        	return true;
         }else{
         return false;
         }
