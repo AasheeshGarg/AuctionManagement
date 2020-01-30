@@ -25,7 +25,17 @@ public class UserService {
 	}
 
 	public void addUser(User user) {
-		userRepository.save(user);
+		List<User> users = this.getAllUsers();
+		if(users.isEmpty())
+			userRepository.save(user);
+		for(User u : users) {
+			if(u.getUsername().equals(user.getUsername()))
+				System.out.println("User already Registered !!!");
+			else if(user.getUsername().isEmpty())
+				System.out.println("Please enter Username");
+			else
+			userRepository.save(user);
+		}
 	}
 
 	public void updateUser(String username, User user) {
