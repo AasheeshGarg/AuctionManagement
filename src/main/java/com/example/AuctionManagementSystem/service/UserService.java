@@ -31,20 +31,23 @@ public class UserService {
 	}
 
 	public void addUser(User user) {
+
+		if(user.getUsername().isEmpty()) {
+			logger.info("Please enter Username");
+			throw new IllegalArgumentException("Invalid UserName.");
+
+		}
 		List<User> users = this.getAllUsers();
+
 		if(users.isEmpty())
 			userRepository.save(user);
 		for(User u : users) {
 			if(u.getUsername().equals(user.getUsername())) {
 
 				logger.info("User already Registered !!!");
-				throw new IllegalArgumentException("USer already registered.");
+				throw new IllegalArgumentException("User already registered.");
 			}
-			else if(user.getUsername().isEmpty()) {
-				logger.info("Please enter Username");
-				throw new IllegalArgumentException("Invalid UserName");
 
-			}
 			userRepository.save(user);
 		}
 	}
