@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 @Service
 public class LoginService {
 
-    Logger logger = Logger.getLogger(LoginService.class.getName());
+    private Logger logger = Logger.getLogger(LoginService.class.getName());
 
     @Autowired
     private UserService userService;
