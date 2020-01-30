@@ -1,13 +1,12 @@
 package com.example.AuctionManagementSystem.service;
 
-import java.util.List;
-
+import com.example.AuctionManagementSystem.model.Product;
+import com.example.AuctionManagementSystem.model.User;
+import com.example.AuctionManagementSystem.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.AuctionManagementSystem.model.Product;
-import com.example.AuctionManagementSystem.repository.ProductRepository;
-import com.example.AuctionManagementSystem.repository.UserRepository;
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -16,7 +15,7 @@ public class ProductService {
 	private ProductRepository productRepository;
 	
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	
 	public void addProduct(Product product) {
 		List<User> users = userService.getAllUsers();
@@ -36,7 +35,7 @@ public class ProductService {
 	}
 
 	public List<Product> getProduct(String userId) {
-		User user = userRepository.findByUserId(new Long(userId));
+		User user = userService.getUserById(Long.valueOf(userId));
 		return user.getProducts();
 	}
 

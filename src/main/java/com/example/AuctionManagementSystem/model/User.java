@@ -1,12 +1,9 @@
 package com.example.AuctionManagementSystem.model;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class User {
@@ -74,6 +71,13 @@ public class User {
 		this.password = password;
 		this.userType = userType;
 		this.products = products;
+	}
+
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+
 	}
 
 	public User(long userId) {

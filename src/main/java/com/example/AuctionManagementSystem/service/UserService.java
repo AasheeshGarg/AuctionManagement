@@ -1,13 +1,12 @@
 package com.example.AuctionManagementSystem.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.example.AuctionManagementSystem.model.User;
+import com.example.AuctionManagementSystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.AuctionManagementSystem.model.User;
-import com.example.AuctionManagementSystem.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -22,6 +21,10 @@ public class UserService {
 
 	public User getUser(String username) {
 		return userRepository.findByUsername(username);
+	}
+
+	public User getUserById(Long userId) {
+		return userRepository.findByUserId(userId);
 	}
 
 	public void addUser(User user) {

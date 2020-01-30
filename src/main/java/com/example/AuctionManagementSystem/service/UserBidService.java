@@ -1,12 +1,11 @@
 package com.example.AuctionManagementSystem.service;
 
-import java.util.List;
-
+import com.example.AuctionManagementSystem.model.UserBid;
+import com.example.AuctionManagementSystem.repository.UserBidRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.AuctionManagementSystem.model.UserBid;
-import com.example.AuctionManagementSystem.repository.UserBidRepository;
+import java.util.List;
 
 @Service
 public class UserBidService {
@@ -19,6 +18,6 @@ public class UserBidService {
 	}
 
 	public List<UserBid> getBids(String productId) {
-		return bidRepository.findByProductId(productId);
+		return bidRepository.findByAuctionProduct(Long.valueOf(productId));
 	}
 }
