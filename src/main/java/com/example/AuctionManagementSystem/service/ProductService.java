@@ -20,35 +20,57 @@ public class ProductService {
 	@Autowired
 	private UserService userService;
 	
+//	public void addProduct(Product product) {
+//		List<User> users = userService.getAllUsers();
+//		for(User u : users) {
+//			List<Product> products = this.getProductsByUserId(Long.toString(u.getUserId()));
+//			if(products.isEmpty())
+//				productRepository.save(product);
+//			for(Product p : products) {
+//				if(p.getProductName().equals(product.getProductName())) {
+//					logger.info("Product already Added !!!");
+//					throw new IllegalArgumentException("Product already present.");
+//				}
+//				else if(product.getProductName().isEmpty()){
+//					logger.info("Please enter Product Name");
+//					throw new IllegalArgumentException("Invalid product name.");
+//				}
+//
+//
+//					productRepository.save(product);
+//			}
+//		}
+//	}
+
+
 	public void addProduct(Product product) {
-		List<User> users = userService.getAllUsers();
-		for(User u : users) {
-			List<Product> products = this.getProduct(Long.toString(u.getUserId()));
-			if(products.isEmpty())
-				productRepository.save(product);
-			for(Product p : products) {
-				if(p.getProductName().equals(product.getProductName())) {
-					logger.info("Product already Added !!!");
-					throw new IllegalArgumentException("Product already present.");
-				}
-				else if(product.getProductName().isEmpty()){
-					logger.info("Please enter Product Name");
-					throw new IllegalArgumentException("Invalid product name.");
-				}
 
-
-					productRepository.save(product);
-			}
+		if(null == product.getProductName() || product.getProductName().isEmpty()){
+			logger.info("Please enter Product Name");
+			throw new IllegalArgumentException("Invalid product name.");
 		}
+
+		User user = userService.getUser(product.getUser().getUsername());
+
+if(user.getProducts() != null) {
+	for (Product p : user.getProducts()) {
+		if (p.getProductName().equals(product.getProductName())) {
+			logger.info("Product already Added !!!");
+			throw new IllegalArgumentException("Product already present.");
+		}
+
+	}
+}
+		productRepository.save(product);
 	}
 
-	public List<Product> getProduct(String userId) {
+	public List<Product> getProductsByUserId(String userId) {
 		User user = userService.getUserById(Long.valueOf(userId));
 		return user.getProducts();
 	}
 
-	public Product getProduct(Product product) {
-		return productRepository.save(product);
+	public Product getProductById(long productId) {
+		return productRepository.findById(productId).get();
 
 	}
 
