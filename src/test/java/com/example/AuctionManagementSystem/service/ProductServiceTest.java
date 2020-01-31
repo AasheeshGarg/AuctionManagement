@@ -34,12 +34,12 @@ public class ProductServiceTest {
 
         User user = new User("ashish", "ashish");
         user.setUserId(1l);
-        when(userService.getUser(anyString())).thenReturn(user);
+        when(userService.getUserById(anyLong())).thenReturn(user);
 
         Product product = new Product(1, "name", "desc", user);
          service.addProduct(product);
 
-        verify(userService, times(1)).getUser(anyString());
+        verify(userService, times(1)).getUserById(anyLong());
         verify(productRepository, times(1)).save(any(Product.class));
     }
 
@@ -52,7 +52,7 @@ public class ProductServiceTest {
         List<Product> productList = new ArrayList<>();
         productList.add(product);
         user.setProducts(productList);
-        when(userService.getUser(anyString())).thenReturn(user);
+        when(userService.getUserById(anyLong())).thenReturn(user);
 
         try {
             service.addProduct(product);
@@ -60,7 +60,7 @@ public class ProductServiceTest {
             Assert.assertEquals(e.getMessage(), "Product already present.");
         }
 
-        verify(userService, times(1)).getUser(anyString());
+        verify(userService, times(1)).getUserById(anyLong());
         verify(productRepository, times(0)).save(any(Product.class));
     }
 
