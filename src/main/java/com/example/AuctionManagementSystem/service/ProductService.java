@@ -50,8 +50,8 @@ public class ProductService {
 			throw new IllegalArgumentException("Invalid product name.");
 		}
 
-		User user = userService.getUser(product.getUser().getUsername());
-
+User user = userService.getUserById(product.getUser().getUserId());
+		
 if(user.getProducts() != null) {
 	for (Product p : user.getProducts()) {
 		if (p.getProductName().equals(product.getProductName())) {
