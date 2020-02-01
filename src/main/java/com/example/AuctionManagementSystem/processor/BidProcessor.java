@@ -45,8 +45,13 @@ public class BidProcessor {
 				UserBid userBid = list.get(0);
 
 				userBid.setBidStatus(BidStatus.AWARDED);
+				
 				logger.info("Awarding for..." + userBid);
 				userBidRepository.save(userBid);
+				
+				long winnerId = userBid.getUser().getUserId();
+				i.setWinnerUserId(winnerId);
+				aRepository.save(i);
 			}
 
 		});
