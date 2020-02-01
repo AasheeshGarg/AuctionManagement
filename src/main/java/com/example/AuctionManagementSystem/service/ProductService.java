@@ -45,22 +45,23 @@ public class ProductService {
 
 	public void addProduct(Product product) {
 
-		if(null == product.getProductName() || product.getProductName().isEmpty()){
+		if (null == product.getProductName() || product.getProductName().isEmpty()) {
 			logger.info("Please enter Product Name");
 			throw new IllegalArgumentException("Invalid product name.");
 		}
 
-User user = userService.getUserById(product.getUser().getUserId());
-		
-if(user.getProducts() != null) {
-	for (Product p : user.getProducts()) {
-		if (p.getProductName().equals(product.getProductName())) {
-			logger.info("Product already Added !!!");
-			throw new IllegalArgumentException("Product already present.");
-		}
+		//User user = userService.getUser(product.getUser().getUsername());
+		User user = userService.getUserById(product.getUser().getUserId());
 
-	}
-}
+		if (user.getProducts() != null) {
+			for (Product p : user.getProducts()) {
+				if (p.getProductName().equals(product.getProductName())) {
+					logger.info("Product already Added !!!");
+					throw new IllegalArgumentException("Product already present.");
+				}
+
+			}
+		}
 		productRepository.save(product);
 	}
 
