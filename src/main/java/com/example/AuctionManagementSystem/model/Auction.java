@@ -18,7 +18,7 @@ public class Auction {
 	private Date startDate;
 	private Date endDate;
 	private AuctionStatus status;
-	private String winnerUserId;
+	private long winnerUserId;
 	@OneToOne()
 	@JoinColumn(name = "productId")
 	private Product product;
@@ -27,7 +27,7 @@ public class Auction {
 	private User user;
 
 	public Auction(long auctionId, float minPrice, float minIncrement, Date startDate, Date endDate,
-			AuctionStatus status, String winnerUserId, Product product, User user) {
+			AuctionStatus status, long winnerUserId, Product product, User user) {
 		super();
 		this.auctionId = auctionId;
 		this.minPrice = minPrice;
@@ -92,12 +92,12 @@ public class Auction {
 		this.status = status;
 	}
 
-	public String getWinnerUserId() {
+	public long getWinnerUserId() {
 		return winnerUserId;
 	}
 
-	public void setWinnerUserId(String winnerUserId) {
-		this.winnerUserId = winnerUserId;
+	public void setWinnerUserId(long l) {
+		this.winnerUserId = l;
 	}
 
 	public Product getProduct() {
