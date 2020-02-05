@@ -32,9 +32,9 @@ public class UserService {
 
 	public void addUser(User user) {
 
-		if(user.getUsername().isEmpty()) {
-			logger.info("Please enter Username");
-			throw new IllegalArgumentException("Invalid UserName.");
+		if(user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
+			logger.info("Please Enter all required fields");
+			throw new IllegalArgumentException("Invalid Data Entered.");
 
 		}
 		List<User> users = this.getAllUsers();
