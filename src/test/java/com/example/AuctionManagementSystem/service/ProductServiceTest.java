@@ -48,6 +48,7 @@ public class ProductServiceTest {
 
         User user = new User("ashish", "ashish");
         user.setUserId(1l);
+        
         Product product = new Product(1, "name", "desc", user);
         List<Product> productList = new ArrayList<>();
         productList.add(product);

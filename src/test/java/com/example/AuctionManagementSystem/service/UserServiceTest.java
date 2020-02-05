@@ -43,7 +43,7 @@ public class UserServiceTest {
 	
 	@Test
 	public void testGetUserByUsername() {
-		when(repository.findByUsername("ashish")).thenReturn(new User( "ashish", "ashish"));
+		when(repository.findByUsername("ashish")).thenReturn(new User("ashish", "ashish"));
 		
 		User user = service.getUser("ashish");
 
@@ -53,9 +53,10 @@ public class UserServiceTest {
 
 	@Test
 	public void testGetUserById() {
-		when(repository.findByUserId(1l)).thenReturn(new User( "ashish", "ashish"));
+		when(repository.findByUserId(1l)).thenReturn(new User("ashish", "ashish"));
 
 		User user = service.getUserById(1l);
+		
 		Assert.assertEquals("ashish", user.getPassword());
 	}
 	
@@ -68,20 +69,6 @@ public class UserServiceTest {
 		service.addUser(user);
 		
 		verify(repository, times(1)).save(user);
-	}
-
-	@Test
-	public void testAddUserWithInvalidName() {
-		User user = new User("", "ashish");
-		when(repository.save(any(User.class))).thenReturn(user);
-
-		try {
-			service.addUser(user);
-		}catch (IllegalArgumentException e){
-		Assert.assertEquals(e.getMessage(), "Invalid UserName.");
-	}
-
-		verify(repository, times(0)).save(user);
 	}
 
 	@Test
@@ -102,5 +89,19 @@ public class UserServiceTest {
 
 		verify(repository, times(1)).save(user);
 	}
+	
+	/*@Test
+	public void testAddUserWithInvalidName() {
+		User user = new User("", "ashish");
+		when(repository.save(any(User.class))).thenReturn(user);
+
+		try {
+			service.addUser(user);
+		}catch (IllegalArgumentException e){
+		Assert.assertEquals(e.getMessage(), "Invalid UserName.");
+	}
+
+		verify(repository, times(0)).save(user);
+	}*/
 	
 }
