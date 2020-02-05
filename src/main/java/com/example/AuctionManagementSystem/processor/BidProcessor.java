@@ -29,23 +29,36 @@ public class BidProcessor {
 
 	@Scheduled(fixedRate = 1000)
 	public void process() {
-		System.out.println("Processing...");
+		logger.info("Processing...");
 		List<Auction> findByStatus = aRepository.findByStatus(AuctionStatus.OPEN);
 		logger.info("Found..." + findByStatus);
 		findByStatus.stream().filter(i -> i.getEndDate().before(new Date())).forEach(i -> {
 			i.setStatus(AuctionStatus.CLOSED);
 			aRepository.save(i);
 
-			logger.info("closing bid for..." + i);
+			logger.info("Closing bid for..." + i);
 			Optional<List<UserBid>> findByAuction = userBidRepository.findByAuction(i);
 			logger.info("Updating bid for..." + findByAuction);
 			if (findByAuction.isPresent()) {
 				List<UserBid> list = findByAuction.get();
 				Collections.sort(list);
-				UserBid userBid = list.get(0);
-
-				userBid.setBidStatus(BidStatus.AWARDED);
 				
+				UserBid userBid = null;
+				int index = 0;
+				while(list.size()>0) {
+				userBid = list.get(index);
+				Date date = userBid.getDate();
+				if(date.after(i.getStartDate()) && date.before(i.getEndDate())) {
+					userBid.setBidStatus(BidStatus.AWARDED);
+					break;
+				}
+				else {
+					userBid.setBidStatus(BidStatus.REJECTED);
+					userBidRepository.save(userBid);
+					index++;
+				}
+				}
+								
 				logger.info("Awarding for..." + userBid);
 				userBidRepository.save(userBid);
 				
