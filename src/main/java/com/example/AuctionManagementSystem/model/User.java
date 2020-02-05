@@ -3,6 +3,8 @@ package com.example.AuctionManagementSystem.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
+
 import java.util.List;
 
 @Entity
@@ -11,6 +13,7 @@ public class User {
 	@GeneratedValue
 	private long userId;
 	private String username;
+	@Size(min=6, max=20, message="Password length should be minimum 6")
 	private String password;
 	private UserType userType;
 	
